@@ -4,7 +4,7 @@ in package.json
  ```
 
 ## In terminal 
- ```npm install --save gh-pages```
+ ```npm install gh-pages --save-dev```
 
  ```Add them in scripts 
   "predeploy": "npm run build",

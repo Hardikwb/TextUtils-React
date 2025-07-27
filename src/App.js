@@ -1,5 +1,5 @@
 
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import React,{useState} from 'react';      // imrs
 import Navbar from './Components/Navbar';
@@ -7,12 +7,23 @@ import Textform1 from './Components/Textform1';
 import Textform2 from './Components/Textform2';
 import About from './Components/About';
 import Alert from './Components/Alert';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // ✅ React Router v6
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // ✅ React Router v6
 
 
 
 function App(props) {
   const [mode, setmode] = useState('light')
+  const [alert, setAlert] = useState(null); // 💥 Add this missing line
+
+ const showAlert = (message, type)=>{
+      setAlert({
+        msg: message,
+        type: type
+      })
+      setTimeout(() => {
+          setAlert(null);
+      }, 1500);
+  }
 
   const toggleMode=()=>{
    if(mode==='light'){
@@ -30,18 +41,18 @@ function App(props) {
   return (
  <>
  <Navbar title="TextUtils" aboutText="About Textutils"  mode={mode} toggleMode={toggleMode} />
+<Alert alert={alert}/>
 <div className=" my-5 rounded px-2 py-2 container" style={{ border: "2px solid black" }} >
-<Textform1 mode={mode} toggleMode={toggleMode} />
+<Textform1 mode={mode} toggleMode={toggleMode} showAlert={showAlert} />
 </div>
 
 <div className=" my-5 rounded px-2 py-2 container" style={{ border: "2px solid black" }}>
-<Textform2 heading="Insert Your Text" mode={mode} toggleMode={toggleMode} />
+<Textform2 heading="Insert Your Text" mode={mode} toggleMode={toggleMode} showAlert={showAlert} />
 </div>
 
 <div className="">
   <About mode={mode} toggleMode={toggleMode}/>
 </div>
-<Alert/>
 </>
  
 
@@ -50,6 +61,8 @@ function App(props) {
 }
 
 export default App;
+
+
 // */
  
 // for actual but for deployment we have to use one page as one page work on github but on server all pages work
@@ -72,6 +85,16 @@ import {
 
 function App(props) {
   const [mode, setmode] = useState('light')
+
+  const showAlert = (message, type)=>{
+      setAlert({
+        msg: message,
+        type: type
+      })
+      setTimeout(() => {
+          setAlert(null);
+      }, 1500);
+  }
 
   const toggleMode = () => {
     if (mode === 'light') {
@@ -96,7 +119,7 @@ function App(props) {
           path="/login"
           element={
             <div className=" my-5 rounded px-2 py-2 container" style={{ border: "2px solid black" }} >
-              <Textform1 mode={mode} toggleMode={toggleMode} />
+              <Textform1 mode={mode} toggleMode={toggleMode} showAlert={showAlert}/>
             </div>
             }
         />
@@ -104,7 +127,7 @@ function App(props) {
           path="/"
           element={
         <div className=" my-5 rounded px-2 py-2 container" style={{ border: "2px solid black" }}>
-          <Textform2 heading="Insert Your Text" mode={mode} toggleMode={toggleMode} />
+          <Textform2 heading="Insert Your Text" mode={mode} showAlert={showAlert} toggleMode={toggleMode} />
         </div>
             }
         />

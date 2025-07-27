@@ -11,6 +11,12 @@ in package.json
   "deploy": "gh-pages -d build" 
   ```
 
+
+## Make Sure it is public
   ```
   in terminal npm run deploy
+  ```
+
+  ```
+  Settings of repository me jake pages me gh-pages select
   ```

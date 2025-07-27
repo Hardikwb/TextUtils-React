@@ -4,23 +4,24 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types' // impt
 
-export default function Textform_02(props) {
+export default function Textform2(props) {
+
   const [text, setText] = useState("Enter your Text Here");
   //// text="new text" // Wrong Way 
   //// setText("new text") // Correct Way
 
   const handleUpClick = () => {
-    // console.log("Upper Case was CLicked"+text);
+    //// console.log("Upper Case was CLicked"+text);
     let upcase = text.toUpperCase();
     setText(upcase)
-    // props.showAlert("Converted to Uppercase!!! ", "success")
+    props.showAlert("Converted to Uppercase!!! ", "success")
   }
 
 
-  // To enable type in setText->>
+  //// To enable type in setText->>
   const handleONChange = (event) => {
     setText(event.target.value)
-    // ek particular moment par koi word type toh text ko jo phle se hai + jo enter uske barabar kar do
+  //// ek particular moment par koi word type toh text ko jo phle se hai + jo enter uske barabar kar do
   }
 
 
@@ -29,7 +30,7 @@ export default function Textform_02(props) {
     let lowcase = text.toLowerCase();
     // setText("You have clicked on handleUpcCLick")
     setText(lowcase)
-    // props.showAlert("Converted to Lowercase!!! ", "success")
+    props.showAlert("Converted to Lowercase!!! ", "success")
   }
 
 
@@ -38,10 +39,10 @@ export default function Textform_02(props) {
       .then(() => {
         alert("Text copied!");
         setText("");
-        // props.showAlert("Copied to Clipboard ", "success")
+        props.showAlert("Copied to Clipboard ", "success")
       })
       .catch((err) => {
-        // props.showAlert("Copied to Clipboard ", "danger")
+        props.showAlert("Copied to Clipboard ", "danger")
         console.error("Failed to copy text: ", err);
       });
   };
@@ -66,13 +67,17 @@ export default function Textform_02(props) {
         //                             fvnjfnv  💥💥💥💥💥💥💥💥💥💥💥💥💥💥
         style={{ backgroundColor: props.mode === 'dark' ? '#13466e' : 'white', color: props.mode === 'dark' ? 'white' : '#042743' }} ></textarea>
         </div>
-        <button className="btn btn-primary mx-2 my-2" onClick={handleUpClick}>Convert to UpperCase</button>
-        <button className="btn btn-primary mx-2 my-2" onClick={handlelowClick}>Convert to LowerCase</button>
-        <button className="btn btn-primary mx-2 my-2" onClick={copytext}>Copy Text</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handleUpClick}>Convert to UpperCase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2 my-2" onClick={handlelowClick}>Convert to LowerCase</button>
+        <button disabled ={text.length===0} className="btn btn-primary mx-2 my-2" onClick={copytext}>Copy Text</button>
         <div className="container">
           <h1>Your's Text Summary</h1>
-
-          <p style={{ color: props.mode == 'dark' ? 'white' : 'dark' }}>{text.split(" ").length} words and {text.length} characters and {convertMinutes(text.length)}  to read the text</p>
+        <p style={{ color: props.mode ==='dark' ? 'white' : 'dark' }}>
+          {/* {text.split(" ").filter((element) => { return element.length !== 0 }).length} words and {text.length} characters and */}
+          {text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} words and {text.length} characters and
+          {/*          \s-> white space                             \s+-> All whiteSpace */}
+          
+           {convertMinutes(text.length)}  to read the text</p>
         </div>
       </div>
 
@@ -80,3 +85,9 @@ export default function Textform_02(props) {
 
   )
 }
+// PropTypes
+Textform2.propTypes = {
+  heading: PropTypes.string.isRequired,
+  showAlert: PropTypes.func.isRequired,
+  mode: PropTypes.string.isRequired
+};
